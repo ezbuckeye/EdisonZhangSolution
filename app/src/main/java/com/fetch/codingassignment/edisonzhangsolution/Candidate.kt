@@ -2,6 +2,6 @@ package com.fetch.codingassignment.edisonzhangsolution
 
 data class Candidate(val id: Number,
                      val listId: Number,
-                     val name: String)
+                     val name: String? = null)
 
-data class Candidates(val candidates: List<Candidates>)
+//data class CandidatesResponse(val candidates: List<Candidate>)
