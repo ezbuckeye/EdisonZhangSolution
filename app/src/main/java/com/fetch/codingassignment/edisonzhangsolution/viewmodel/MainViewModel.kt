@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fetch.codingassignment.edisonzhangsolution.ApiService.Companion.apiService
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
 import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
 import kotlinx.coroutines.launch

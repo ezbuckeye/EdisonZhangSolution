@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fetch.codingassignment.edisonzhangsolution.ApiService
 import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
 import com.fetch.codingassignment.edisonzhangsolution.ui.theme.EdisonZhangSolutionTheme
