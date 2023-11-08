@@ -26,7 +26,7 @@ class MainViewModel : ViewModel() {
             try {
                 val response = hiringService.getCandidates()
                 _hiringListState.value = _hiringListState.value.copy(
-                    list = response,
+                    list = response.filter{ candidate -> !candidate.name.isNullOrBlank()}.sortedWith(compareBy({it.listId.toInt()}, {it.name})),
                     loading = false,
                     error = null
                 )
