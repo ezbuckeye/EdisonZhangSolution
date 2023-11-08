@@ -1,14 +1,21 @@
 package com.fetch.codingassignment.edisonzhangsolution
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,39 +42,69 @@ fun HiringScreen(modifier: Modifier = Modifier) {
             }
             else -> {
                 // Display Candidates
-                CandidateScreen(hiringListState.list)
+                CandidateTable(hiringListState.list)
             }
         }
     }
 }
 
 @Composable
-fun CandidateScreen(candidates: List<Candidate>) {
-    LazyVerticalGrid(GridCells.Fixed(1), modifier = Modifier.fillMaxSize()) {
-        items(candidates) {
-            candidate ->
-            CandidateItem(candidate = candidate)
-        }
+fun CandidateTableHeader() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+            .border(1.dp, MaterialTheme.colorScheme.primary)
+    ) {
+        Text(
+            text = "ID",
+            modifier = Modifier.weight(1f).padding(8.dp),
+            style = MaterialTheme.typography.headlineSmall
+        )
+        Text(
+            text = "List ID",
+            modifier = Modifier.weight(1f).padding(8.dp),
+            style = MaterialTheme.typography.headlineSmall
+        )
+        Text(
+            text = "Name",
+            modifier = Modifier.weight(1f).padding(8.dp),
+            style = MaterialTheme.typography.headlineSmall
+        )
     }
 }
 
 @Composable
-fun CandidateItem(candidate: Candidate) {
-    Column(modifier = Modifier
-        .padding(8.dp)
-        .fillMaxSize()) {
-        Text(text = candidate.id.toString(),
-            color = Color.Black,
-            style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(top=4.dp))
-        Text(text = candidate.listId.toString(),
-            color = Color.Black,
-            style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(top=4.dp))
-        Text(text = candidate.name ?: "null",
-            color = Color.Black,
-            style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(top=4.dp))
+fun CandidateTableRow(candidate: Candidate) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, MaterialTheme.colorScheme.primary)
+    ) {
+        Text(
+            text = candidate.id.toString(),
+            modifier = Modifier.weight(1f).padding(8.dp)
+        )
+        Text(
+            text = candidate.listId.toString(),
+            modifier = Modifier.weight(1f).padding(8.dp)
+        )
+        Text(
+            text = candidate.name.orEmpty(),
+            modifier = Modifier.weight(1f).padding(8.dp)
+        )
+    }
+}
 
+
+@Composable
+fun CandidateTable(candidates: List<Candidate>) {
+    Column {
+        CandidateTableHeader()
+        LazyColumn {
+            items(candidates) { candidate ->
+                CandidateTableRow(candidate = candidate)
+            }
+        }
     }
 }
