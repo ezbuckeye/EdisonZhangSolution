@@ -1,17 +1,20 @@
-package com.fetch.codingassignment.edisonzhangsolution
+package com.fetch.codingassignment.edisonzhangsolution.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fetch.codingassignment.edisonzhangsolution.ApiService.Companion.apiService
+import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
+import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel constructor(private val mainRepository: MainRepository) : ViewModel() {
 
-    private val _hiringListState = mutableStateOf(HiringListState())
-    val hiringListState: State<HiringListState> = _hiringListState
+    private val _candidatesListState = mutableStateOf(CandidatesListState())
+    val candidatesListState: State<CandidatesListState> = _candidatesListState
 
-    data class HiringListState(
+    data class CandidatesListState(
         val loading: Boolean = true,
         val list: List<Candidate> = emptyList(),
         val error: String? = null
@@ -24,14 +27,14 @@ class MainViewModel : ViewModel() {
     private fun fetchCandidates() {
         viewModelScope.launch {
             try {
-                val response = hiringService.getCandidates()
-                _hiringListState.value = _hiringListState.value.copy(
+                val response = mainRepository.getCandidates()
+                _candidatesListState.value = _candidatesListState.value.copy(
                     list = response.filter{ candidate -> !candidate.name.isNullOrBlank()}.sortedWith(compareBy({it.listId.toInt()}, {it.name})),
                     loading = false,
                     error = null
                 )
             }catch(e: Exception){
-                _hiringListState.value = _hiringListState.value.copy(
+                _candidatesListState.value = _candidatesListState.value.copy(
                     loading = false,
                     error = "Error fetching Categories ${e.message}"
                 )

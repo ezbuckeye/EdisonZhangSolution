@@ -1,8 +1,7 @@
-package com.fetch.codingassignment.edisonzhangsolution
+package com.fetch.codingassignment.edisonzhangsolution.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -21,28 +17,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
+import com.fetch.codingassignment.edisonzhangsolution.viewmodel.MainViewModel
 
 @Composable
-fun HiringScreen(modifier: Modifier = Modifier) {
-    val hiringViewModel: MainViewModel = viewModel()
-    val hiringListState by hiringViewModel.hiringListState
+fun CandidatesScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+    val candidatesListState by viewModel.candidatesListState
     Box(modifier = Modifier.fillMaxSize()) {
         when{
-            hiringListState.loading -> {
+            candidatesListState.loading -> {
                 CircularProgressIndicator(modifier.align(Alignment.Center))
             }
 
-            hiringListState.error!=null -> {
-                Text(hiringListState.error ?: "ERROR OCCURED")
+            candidatesListState.error!=null -> {
+                Text(candidatesListState.error ?: "ERROR OCCURED")
             }
             else -> {
                 // Display Candidates
-                CandidateTable(hiringListState.list)
+                CandidateTable(candidatesListState.list)
             }
         }
     }
@@ -58,17 +51,23 @@ fun CandidateTableHeader() {
     ) {
         Text(
             text = "ID",
-            modifier = Modifier.weight(1f).padding(8.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp),
             style = MaterialTheme.typography.headlineSmall
         )
         Text(
             text = "List ID",
-            modifier = Modifier.weight(1f).padding(8.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp),
             style = MaterialTheme.typography.headlineSmall
         )
         Text(
             text = "Name",
-            modifier = Modifier.weight(1f).padding(8.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp),
             style = MaterialTheme.typography.headlineSmall
         )
     }
@@ -83,15 +82,21 @@ fun CandidateTableRow(candidate: Candidate) {
     ) {
         Text(
             text = candidate.id.toString(),
-            modifier = Modifier.weight(1f).padding(8.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp)
         )
         Text(
             text = candidate.listId.toString(),
-            modifier = Modifier.weight(1f).padding(8.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp)
         )
         Text(
             text = candidate.name.orEmpty(),
-            modifier = Modifier.weight(1f).padding(8.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp)
         )
     }
 }
