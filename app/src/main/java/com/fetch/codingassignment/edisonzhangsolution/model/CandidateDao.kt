@@ -1,9 +1,11 @@
 package com.fetch.codingassignment.edisonzhangsolution.model
 
+import androidx.room.Dao
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
-interface MainRepository {
+@Dao
+interface CandidateDao {
+    @Query("SELECT * FROM candidate")
     fun getCandidates(): Flow<List<Candidate>>
-    suspend fun fetchCandidates(): List<Candidate>
-
 }
