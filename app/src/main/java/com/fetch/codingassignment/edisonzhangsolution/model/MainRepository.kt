@@ -5,6 +5,8 @@ import retrofit2.Response
 
 interface MainRepository {
     fun getCandidates(): Flow<List<Candidate>>
+
+    fun getListIds(): Flow<List<Int>>
     suspend fun fetchCandidates(): Response<List<Candidate>>
 
 }

@@ -41,8 +41,7 @@ import com.fetch.codingassignment.edisonzhangsolution.util.UiState
 
 @Composable
 fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesViewModel>(), modifier: Modifier = Modifier) {
-//    val candidatesListState by viewModel.candidatesListState
-    val candidates = viewModel.candidates.collectAsState(initial = emptyList())
+    val candidates = viewModel.candidates.collectAsState(initial = emptyList()).value
     val uiState = viewModel.uiState
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(key1 = true) {
@@ -62,11 +61,13 @@ fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesVi
     Scaffold(snackbarHost = {
         SnackbarHost(hostState = snackbarHostState)
     }) { it ->
-        Column(modifier = Modifier.fillMaxSize().padding(it)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)) {
             AppHeader(viewModel)
             when (uiState) {
                 UiState.loading -> CircularProgressIndicator(modifier.align(Alignment.CenterHorizontally))
-                UiState.success, UiState.error -> CandidateTable(candidates.value)
+                UiState.success, UiState.error -> CandidateTable(candidates)
             }
         }
     }
@@ -103,6 +104,7 @@ fun ButtonGroup(viewModel: CandidatesViewModel) {
 @Composable
 fun DropDownFilter(viewModel: CandidatesViewModel) {
     val expanded = viewModel.expanded
+    val listIds = viewModel.listIds.collectAsState(initial = emptyList()).value
     Box {
         Button(onClick = { viewModel.onEvent(CandidatesEvent.OnDropdownClick) }) {
             Text(text = "filter")
@@ -111,14 +113,12 @@ fun DropDownFilter(viewModel: CandidatesViewModel) {
             expanded = expanded,
             onDismissRequest = { viewModel.onEvent(CandidatesEvent.OnDropdownDismiss) }
         ) {
-            DropdownMenuItem(
-                text = {Text("1")},
-                onClick = {}
-            )
-            DropdownMenuItem(
-                text = {Text("2")},
-                onClick = {}
-            )
+            listIds.forEach {
+                DropdownMenuItem(
+                    text = {Text(text = it.toString() )},
+                    onClick = { viewModel.onEvent(CandidatesEvent.OnListIdSelect(it)) }
+                )
+            }
         }
     }
 }

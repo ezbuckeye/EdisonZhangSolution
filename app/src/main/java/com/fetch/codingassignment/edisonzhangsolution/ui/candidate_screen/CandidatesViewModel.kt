@@ -20,6 +20,7 @@ import javax.inject.Inject
 class CandidatesViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
     val candidates = mainRepository.getCandidates()
+    val listIds = mainRepository.getListIds()
 
     private val _uiEvent =  Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -38,7 +39,8 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
             is CandidatesEvent.OnDropdownDismiss -> {
                 expanded = false
             }
-            is CandidatesEvent.OnListIdSelect -> TODO()
+            is CandidatesEvent.OnListIdSelect -> {
+            }
             is CandidatesEvent.OnSyncClick -> {
                 viewModelScope.launch {
                     uiState = UiState.loading

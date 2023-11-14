@@ -12,6 +12,9 @@ interface CandidateDao {
     @Query("SELECT * FROM candidate WHERE name IS NOT NULL AND name != '' ORDER BY listId, name")
     fun getCandidates(): Flow<List<Candidate>>
 
+    @Query("SELECT DISTINCT listId FROM candidate ORDER BY listId")
+    fun getListIds(): Flow<List<Int>>
+
     @Query("DELETE FROM candidate")
     suspend fun dropCandidates()
 

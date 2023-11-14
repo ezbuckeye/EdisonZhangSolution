@@ -9,6 +9,11 @@ class MainRepositoryImpl @Inject constructor(private val mainApi: MainApi, priva
     override fun getCandidates(): Flow<List<Candidate>> {
         return dao.getCandidates()
     }
+
+    override fun getListIds(): Flow<List<Int>> {
+        return dao.getListIds()
+    }
+
     override suspend fun fetchCandidates(): Response<List<Candidate>> {
         val response: Response<List<Candidate>> = mainApi.getCandidates()
         if(response.isSuccessful) {

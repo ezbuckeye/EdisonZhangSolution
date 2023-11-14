@@ -4,6 +4,6 @@ sealed class CandidatesEvent {
     object OnSyncClick: CandidatesEvent()
     object OnDropdownClick: CandidatesEvent()
     object OnDropdownDismiss: CandidatesEvent()
-    data class OnListIdSelect(val listId: Integer): CandidatesEvent()
+    data class OnListIdSelect(val listId: Int): CandidatesEvent()
 }
 
