@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    // For Snackbar
+    implementation("androidx.compose.material3:material3:1.1.1")
     // Compose ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     //Network calls

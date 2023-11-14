@@ -16,12 +16,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,31 +36,40 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fetch.codingassignment.edisonzhangsolution.R
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
+import com.fetch.codingassignment.edisonzhangsolution.util.UiEvent
+import com.fetch.codingassignment.edisonzhangsolution.util.UiState
 
 @Composable
 fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesViewModel>(), modifier: Modifier = Modifier) {
 //    val candidatesListState by viewModel.candidatesListState
     val candidates = viewModel.candidates.collectAsState(initial = emptyList())
-    Column(modifier = Modifier.fillMaxSize()) {
-        AppHeader(viewModel)
-//        Box(modifier = Modifier.fillMaxSize()) {
-//            when{
-//                candidatesListState.loading -> {
-//                    CircularProgressIndicator(modifier.align(Alignment.Center))
-//                }
-//
-//                candidatesListState.error!=null -> {
-//                    Text(candidatesListState.error ?: "ERROR OCCURED")
-//                }
-//                else -> {
-//                    // Display Candidates
-//                    CandidateTable(candidatesListState.list)
-//                }
-//            }
-//        }
-        CandidateTable(candidates.value)
+    val uiState = viewModel.uiState
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when(event) {
+                is UiEvent.ShowSnackbar -> {
+                    val result = snackbarHostState.showSnackbar(
+                        message = event.message,
+                        withDismissAction = true
+                    )
+                }
+                else -> Unit
+            }
+        }
     }
 
+    Scaffold(snackbarHost = {
+        SnackbarHost(hostState = snackbarHostState)
+    }) { it ->
+        Column(modifier = Modifier.fillMaxSize().padding(it)) {
+            AppHeader(viewModel)
+            when (uiState) {
+                UiState.loading -> CircularProgressIndicator(modifier.align(Alignment.CenterHorizontally))
+                UiState.success, UiState.error -> CandidateTable(candidates.value)
+            }
+        }
+    }
 }
 
 @Composable

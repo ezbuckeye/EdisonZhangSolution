@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
 import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
 import com.fetch.codingassignment.edisonzhangsolution.util.UiEvent
+import com.fetch.codingassignment.edisonzhangsolution.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -26,6 +27,9 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
     var expanded by mutableStateOf<Boolean>(false)
         private set
 
+    var uiState by mutableStateOf<UiState>(UiState.success)
+        private set
+
     fun onEvent(event: CandidatesEvent) {
         when(event) {
             is CandidatesEvent.OnDropdownClick -> {
@@ -37,39 +41,20 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
             is CandidatesEvent.OnListIdSelect -> TODO()
             is CandidatesEvent.OnSyncClick -> {
                 viewModelScope.launch {
+                    uiState = UiState.loading
                     val response = mainRepository.fetchCandidates()
+                    uiState = if(response.isSuccessful) UiState.success else UiState.error
+                    if(uiState == UiState.error)
+                        sendUiEvent(UiEvent.ShowSnackbar(message = "Synchronization failed due to ${response.message()}"))
                 }
             }
         }
     }
 
-//    private val _candidatesListState = mutableStateOf(CandidatesListState())
-//    val candidatesListState: State<CandidatesListState> = _candidatesListState
-//
-//    data class CandidatesListState(
-//        val loading: Boolean = true,
-//        val list: List<Candidate> = emptyList(),
-//        val error: String? = null
-//    )
-
-    /*
-    private fun fetchCandidates() {
+    private fun sendUiEvent(event: UiEvent) {
         viewModelScope.launch {
-            try {
-                val response = mainRepository.getCandidates()
-                _candidatesListState.value = _candidatesListState.value.copy(
-                    list = response.filter{ candidate -> !candidate.name.isNullOrBlank()}.sortedWith(compareBy({it.listId.toInt()}, {it.name})),
-                    loading = false,
-                    error = null
-                )
-            }catch(e: Exception){
-                _candidatesListState.value = _candidatesListState.value.copy(
-                    loading = false,
-                    error = "Error fetching Categories ${e.message}"
-                )
-            }
+            _uiEvent.send(event)
         }
     }
-     */
 
 }
