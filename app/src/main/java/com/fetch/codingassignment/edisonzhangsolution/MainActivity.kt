@@ -1,4 +1,4 @@
-package com.fetch.codingassignment.edisonzhangsolution.view
+package com.fetch.codingassignment.edisonzhangsolution
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fetch.codingassignment.edisonzhangsolution.ui.theme.EdisonZhangSolutionTheme
+import com.fetch.codingassignment.edisonzhangsolution.view.CandidatesScreen
 import com.fetch.codingassignment.edisonzhangsolution.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

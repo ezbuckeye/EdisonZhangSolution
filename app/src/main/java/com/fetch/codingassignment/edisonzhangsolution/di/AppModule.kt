@@ -1,6 +1,6 @@
 package com.fetch.codingassignment.edisonzhangsolution.di
 
-import com.fetch.codingassignment.edisonzhangsolution.ApiService
+import com.fetch.codingassignment.edisonzhangsolution.model.MainApi
 import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
 import dagger.Module
 import dagger.Provides
@@ -15,15 +15,15 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideApiService(): ApiService {
+    fun provideMainApi(): MainApi {
         return Retrofit.Builder().baseUrl("https://fetch-hiring.s3.amazonaws.com/").addConverterFactory(
-            GsonConverterFactory.create()).build().create(ApiService::class.java)
+            GsonConverterFactory.create()).build().create(MainApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideMainRepository(apiService: ApiService): MainRepository {
-        return MainRepository(apiService = apiService)
+    fun provideMainRepository(mainApi: MainApi): MainRepository {
+        return MainRepository(mainApi = mainApi)
     }
 
 }
