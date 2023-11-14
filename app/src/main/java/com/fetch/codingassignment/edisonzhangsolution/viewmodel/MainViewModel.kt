@@ -13,6 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
+    val candidates = mainRepository.getCandidates()
+
     private val _candidatesListState = mutableStateOf(CandidatesListState())
     val candidatesListState: State<CandidatesListState> = _candidatesListState
 
@@ -22,10 +24,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         val error: String? = null
     )
 
-    init {
-        fetchCandidates()
-    }
-
+    /*
     private fun fetchCandidates() {
         viewModelScope.launch {
             try {
@@ -43,5 +42,6 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
         }
     }
+     */
 
 }

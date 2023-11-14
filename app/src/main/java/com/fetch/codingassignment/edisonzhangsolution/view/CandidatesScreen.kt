@@ -22,35 +22,39 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fetch.codingassignment.edisonzhangsolution.R
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
 import com.fetch.codingassignment.edisonzhangsolution.viewmodel.MainViewModel
 
 @Composable
-fun CandidatesScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
-    val candidatesListState by viewModel.candidatesListState
+fun CandidatesScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>(), modifier: Modifier = Modifier) {
+//    val candidatesListState by viewModel.candidatesListState
+    val candidates = viewModel.candidates.collectAsState(initial = emptyList())
     Column(modifier = Modifier.fillMaxSize()) {
         AppHeader()
-        Box(modifier = Modifier.fillMaxSize()) {
-            when{
-                candidatesListState.loading -> {
-                    CircularProgressIndicator(modifier.align(Alignment.Center))
-                }
-
-                candidatesListState.error!=null -> {
-                    Text(candidatesListState.error ?: "ERROR OCCURED")
-                }
-                else -> {
-                    // Display Candidates
-                    CandidateTable(candidatesListState.list)
-                }
-            }
-        }
+//        Box(modifier = Modifier.fillMaxSize()) {
+//            when{
+//                candidatesListState.loading -> {
+//                    CircularProgressIndicator(modifier.align(Alignment.Center))
+//                }
+//
+//                candidatesListState.error!=null -> {
+//                    Text(candidatesListState.error ?: "ERROR OCCURED")
+//                }
+//                else -> {
+//                    // Display Candidates
+//                    CandidateTable(candidatesListState.list)
+//                }
+//            }
+//        }
+        CandidateTable(candidates.value)
     }
 
 }
