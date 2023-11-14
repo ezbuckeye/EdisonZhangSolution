@@ -1,4 +1,4 @@
-package com.fetch.codingassignment.edisonzhangsolution.view
+package com.fetch.codingassignment.edisonzhangsolution.ui.candidate_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,14 +16,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fetch.codingassignment.edisonzhangsolution.R
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
-import com.fetch.codingassignment.edisonzhangsolution.viewmodel.MainViewModel
 
 @Composable
 fun CandidatesScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>(), modifier: Modifier = Modifier) {
