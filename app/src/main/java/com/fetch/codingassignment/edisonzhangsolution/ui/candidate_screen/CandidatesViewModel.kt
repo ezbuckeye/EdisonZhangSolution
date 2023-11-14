@@ -5,12 +5,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
 import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
 import com.fetch.codingassignment.edisonzhangsolution.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +35,11 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
                 expanded = false
             }
             is CandidatesEvent.OnListIdSelect -> TODO()
-            is CandidatesEvent.OnSyncClick -> TODO()
+            is CandidatesEvent.OnSyncClick -> {
+                viewModelScope.launch {
+                    val response = mainRepository.fetchCandidates()
+                }
+            }
         }
     }
 

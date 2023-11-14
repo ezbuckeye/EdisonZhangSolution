@@ -76,7 +76,7 @@ fun ButtonGroup(viewModel: CandidatesViewModel) {
         .padding(2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { viewModel.onEvent(CandidatesEvent.OnSyncClick) }) {
             Text(text = "sync")
         }
         Spacer(modifier = Modifier.width(8.dp))
