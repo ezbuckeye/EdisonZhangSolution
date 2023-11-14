@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
 import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel constructor(private val mainRepository: MainRepository) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
     private val _candidatesListState = mutableStateOf(CandidatesListState())
     val candidatesListState: State<CandidatesListState> = _candidatesListState

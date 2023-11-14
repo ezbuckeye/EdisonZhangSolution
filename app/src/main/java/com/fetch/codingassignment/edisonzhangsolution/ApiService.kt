@@ -9,20 +9,4 @@ interface ApiService {
     @GET("hiring.json")
     suspend fun getCandidates():List<Candidate>
 
-
-    companion object {
-        var apiService: ApiService? = null
-        fun getInstance() : ApiService {
-            if (apiService == null) {
-                val retrofit = Retrofit.Builder()
-                    .baseUrl("https://fetch-hiring.s3.amazonaws.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                apiService = retrofit.create(ApiService::class.java)
-            }
-            return apiService!!
-        }
-
-    }
-
 }

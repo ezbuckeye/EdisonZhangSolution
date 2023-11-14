@@ -7,27 +7,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.fetch.codingassignment.edisonzhangsolution.ApiService
-import com.fetch.codingassignment.edisonzhangsolution.model.MainRepository
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fetch.codingassignment.edisonzhangsolution.ui.theme.EdisonZhangSolutionTheme
 import com.fetch.codingassignment.edisonzhangsolution.viewmodel.MainViewModel
-import com.fetch.codingassignment.edisonzhangsolution.viewmodel.MyViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     lateinit var viewModel: MainViewModel
-    // viewModel by viewModels<MainViewModel>() // (if no arg) create a viewModel instance for Activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val apiService = ApiService.getInstance()
-        val mainRepository = MainRepository(apiService = apiService)
-        viewModel = ViewModelProvider(this, MyViewModelFactory(mainRepository)).get(MainViewModel::class.java);
         setContent {
             EdisonZhangSolutionTheme {
-//                create a viewModel instance for compose
-//                viewModel = viewModel<MainViewModel>()  // (if no arg)
-//                viewModel = viewModel<MainViewModel>(factory=MyViewModelFactory(mainRepository))
+                viewModel = hiltViewModel<MainViewModel>()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
