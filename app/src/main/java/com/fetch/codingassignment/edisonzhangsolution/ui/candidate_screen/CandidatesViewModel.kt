@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
+class CandidatesViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
     val candidates = mainRepository.getCandidates()
 

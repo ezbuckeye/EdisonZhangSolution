@@ -31,7 +31,7 @@ import com.fetch.codingassignment.edisonzhangsolution.R
 import com.fetch.codingassignment.edisonzhangsolution.model.Candidate
 
 @Composable
-fun CandidatesScreen(viewModel: MainViewModel = hiltViewModel<MainViewModel>(), modifier: Modifier = Modifier) {
+fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesViewModel>(), modifier: Modifier = Modifier) {
 //    val candidatesListState by viewModel.candidatesListState
     val candidates = viewModel.candidates.collectAsState(initial = emptyList())
     Column(modifier = Modifier.fillMaxSize()) {
