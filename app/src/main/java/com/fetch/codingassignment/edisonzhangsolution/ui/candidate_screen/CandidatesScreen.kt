@@ -35,7 +35,7 @@ fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesVi
 //    val candidatesListState by viewModel.candidatesListState
     val candidates = viewModel.candidates.collectAsState(initial = emptyList())
     Column(modifier = Modifier.fillMaxSize()) {
-        AppHeader()
+        AppHeader(viewModel)
 //        Box(modifier = Modifier.fillMaxSize()) {
 //            when{
 //                candidatesListState.loading -> {
@@ -57,7 +57,7 @@ fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesVi
 }
 
 @Composable
-fun AppHeader(){
+fun AppHeader(viewModel: CandidatesViewModel){
     Row(modifier = Modifier
         .fillMaxHeight(0.15f)
         .fillMaxWidth()
@@ -65,12 +65,12 @@ fun AppHeader(){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween){
         Image(painter = painterResource(id = R.drawable.fetch_rewards_logo), contentDescription = "fetch app logo")
-        ButtonGroup()
+        ButtonGroup(viewModel)
     }
 }
 
 @Composable
-fun ButtonGroup() {
+fun ButtonGroup(viewModel: CandidatesViewModel) {
     Row(modifier = Modifier
         .fillMaxHeight()
         .padding(2.dp),
@@ -80,19 +80,20 @@ fun ButtonGroup() {
             Text(text = "sync")
         }
         Spacer(modifier = Modifier.width(8.dp))
-        DropDownFilter()
+        DropDownFilter(viewModel)
     }
 }
 
 @Composable
-fun DropDownFilter() {
+fun DropDownFilter(viewModel: CandidatesViewModel) {
+    val expanded = viewModel.expanded
     Box {
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { viewModel.onEvent(CandidatesEvent.OnDropdownClick) }) {
             Text(text = "filter")
         }
         DropdownMenu(
-            expanded = false,
-            onDismissRequest = {  }
+            expanded = expanded,
+            onDismissRequest = { viewModel.onEvent(CandidatesEvent.OnDropdownDismiss) }
         ) {
             DropdownMenuItem(
                 text = {Text("1")},
