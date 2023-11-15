@@ -2,6 +2,7 @@ package com.fetch.codingassignment.edisonzhangsolution.ui.candidate_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,11 +49,14 @@ fun CandidatesTableHeader() {
 }
 
 @Composable
-fun CandidatesTableRow(candidate: Candidate) {
+fun CandidatesTableRow(candidate: Candidate, onEvent: (CandidatesEvent)->Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, MaterialTheme.colorScheme.primary)
+            .clickable {
+                onEvent(CandidatesEvent.OnClickCandidate(candidate))
+            }
     ) {
         Text(
             text = candidate.id.toString(),
@@ -77,12 +81,12 @@ fun CandidatesTableRow(candidate: Candidate) {
 
 
 @Composable
-fun CandidatesTable(candidates: List<Candidate>) {
+fun CandidatesTable(candidates: List<Candidate>, onEvent: (CandidatesEvent)->Unit) {
     Column {
         CandidatesTableHeader()
         LazyColumn {
             items(candidates) { candidate ->
-                CandidatesTableRow(candidate = candidate)
+                CandidatesTableRow(candidate = candidate, onEvent)
             }
         }
     }

@@ -40,6 +40,7 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
                 expanded = false
             }
             is CandidatesEvent.OnListIdSelect -> {
+//                candidates.
             }
             is CandidatesEvent.OnSyncClick -> {
                 viewModelScope.launch {
@@ -49,6 +50,11 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
                     if(uiState == UiState.error)
                         sendUiEvent(UiEvent.ShowSnackbar(message = "Synchronization failed due to ${response.message()}"))
                 }
+            }
+
+            is CandidatesEvent.OnClickCandidate -> {
+                val candidate: Candidate = event.candidate
+                sendUiEvent(UiEvent.ShowSnackbar(candidate.toString()))
             }
         }
     }

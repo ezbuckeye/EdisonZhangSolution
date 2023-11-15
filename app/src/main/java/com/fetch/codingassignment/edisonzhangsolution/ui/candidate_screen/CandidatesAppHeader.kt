@@ -63,7 +63,7 @@ fun DropDownFilter(viewModel: CandidatesViewModel) {
         ) {
             listIds.forEach {
                 DropdownMenuItem(
-                    text = { Text(text = it.toString() ) },
+                    text = { Text(text = it.toString()) },
                     onClick = { viewModel.onEvent(CandidatesEvent.OnListIdSelect(it)) }
                 )
             }

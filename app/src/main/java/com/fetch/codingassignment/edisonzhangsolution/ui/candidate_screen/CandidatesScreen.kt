@@ -55,7 +55,7 @@ fun CandidatesScreen(viewModel: CandidatesViewModel = hiltViewModel<CandidatesVi
             CandidatesAppHeader(viewModel)
             when (uiState) {
                 UiState.loading -> CircularProgressIndicator(modifier.align(Alignment.CenterHorizontally))
-                UiState.success, UiState.error -> CandidatesTable(candidates)
+                UiState.success, UiState.error -> CandidatesTable(candidates, viewModel::onEvent)
             }
         }
     }

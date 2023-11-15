@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CandidateDao {
-    @Query("SELECT * FROM candidate WHERE name IS NOT NULL AND name != '' ORDER BY listId, name")
+    @Query("SELECT * FROM candidate WHERE name IS NOT NULL AND name != '' ORDER BY listId, id")
     fun getCandidates(): Flow<List<Candidate>>
 
     @Query("SELECT DISTINCT listId FROM candidate ORDER BY listId")
