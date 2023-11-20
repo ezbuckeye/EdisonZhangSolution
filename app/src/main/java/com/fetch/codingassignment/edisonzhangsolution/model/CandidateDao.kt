@@ -20,4 +20,7 @@ interface CandidateDao {
 
     @Insert
     suspend fun addCandidates(candidates: List<Candidate>)
+
+    @Query("SELECT * FROM candidate WHERE id=:id")
+    suspend fun getCandidate(id: Int): Candidate
 }

@@ -7,4 +7,5 @@ sealed class UiEvent {
     data class NavigateToCandidateDetailScreen(
         val id: Int
     ): UiEvent()
+    object NavigateBackToCandidatesScreen: UiEvent()
 }

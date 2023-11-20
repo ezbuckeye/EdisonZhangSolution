@@ -9,4 +9,6 @@ interface MainRepository {
     fun getListIds(): Flow<List<Int>>
     suspend fun fetchCandidates(): Response<List<Candidate>>
 
+    suspend fun getCandidateDetail(id: Int): Candidate
+
 }

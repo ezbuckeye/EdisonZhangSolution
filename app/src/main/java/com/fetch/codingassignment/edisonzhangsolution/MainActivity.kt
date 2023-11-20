@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         )
                         ) {
                         val candidateId = it.arguments!!.getInt("id");
-                        CandidateDetailScreen(id = candidateId);
+                        CandidateDetailScreen(id = candidateId, navController = navController);
                     }
                 }
 

@@ -25,4 +25,8 @@ class MainRepositoryImpl @Inject constructor(private val mainApi: MainApi, priva
         return response
     }
 
+    override suspend fun getCandidateDetail(id: Int): Candidate {
+        return dao.getCandidate(id)
+    }
+
 }
