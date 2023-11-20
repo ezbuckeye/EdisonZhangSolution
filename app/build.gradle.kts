@@ -64,6 +64,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-beta01")
+    //Navigation
+    implementation("androidx.navigation:navigation-compose:2.5.3")
     // Room
     val room_version = "2.6.0"
     implementation("androidx.room:room-runtime:$room_version")

@@ -1,4 +1,4 @@
-package com.fetch.codingassignment.edisonzhangsolution.ui.candidate_screen
+package com.fetch.codingassignment.edisonzhangsolution.ui.candidates_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -55,7 +55,7 @@ fun CandidatesTableRow(candidate: Candidate, onEvent: (CandidatesEvent)->Unit) {
             .fillMaxWidth()
             .border(1.dp, MaterialTheme.colorScheme.primary)
             .clickable {
-                onEvent(CandidatesEvent.OnClickCandidate(candidate))
+                onEvent(CandidatesEvent.OnClickCandidate(candidate.id))
             }
     ) {
         Text(

@@ -1,6 +1,5 @@
-package com.fetch.codingassignment.edisonzhangsolution.ui.candidate_screen
+package com.fetch.codingassignment.edisonzhangsolution.ui.candidates_screen
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -53,8 +52,8 @@ class CandidatesViewModel @Inject constructor(private val mainRepository: MainRe
             }
 
             is CandidatesEvent.OnClickCandidate -> {
-                val candidate: Candidate = event.candidate
-                sendUiEvent(UiEvent.ShowSnackbar(candidate.toString()))
+                val candidateId: Int = event.candidateId
+                sendUiEvent(UiEvent.NavigateToCandidateDetailScreen(candidateId))
             }
         }
     }

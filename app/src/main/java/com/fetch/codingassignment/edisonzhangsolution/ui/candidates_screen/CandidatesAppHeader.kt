@@ -1,4 +1,4 @@
-package com.fetch.codingassignment.edisonzhangsolution.ui.candidate_screen
+package com.fetch.codingassignment.edisonzhangsolution.ui.candidates_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
